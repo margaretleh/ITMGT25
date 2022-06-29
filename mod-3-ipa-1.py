@@ -91,7 +91,7 @@ def caesar_cipher(message, shift):
     for i in range(repetitions):
         letter = message[i]
         if letter == " ":
-            print(" ", end="")
+            ThisText += " "
         else:
             index = alphabet.index(letter)
             NewIndex = index+shift
