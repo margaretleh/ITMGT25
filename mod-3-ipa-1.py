@@ -37,7 +37,7 @@ def shift_letter(letter, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-     '''
+    '''
     // make a list of the letters
     // get the index of the letter given
     // now get the new index after the shift
@@ -48,7 +48,7 @@ def shift_letter(letter, shift):
         index = alphabet.index(letter)
         NewIndex = index+shift
         if NewIndex > 25:
-            return(alphabet[NewIndex-26])
+            return(alphabet[NewIndex%26])
         else:
             return(alphabet[NewIndex])
     
@@ -75,7 +75,7 @@ def caesar_cipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-     '''
+    '''
     // get the text
     // get the index of each individual letters in the text
         // get the length of the text ?
@@ -96,7 +96,7 @@ def caesar_cipher(message, shift):
             index = alphabet.index(letter)
             NewIndex = index+shift
             if NewIndex > 25:
-                ThisText += (alphabet[NewIndex-26])
+                ThisText += (alphabet[NewIndex%26])
             else:
                 ThisText += (alphabet[NewIndex])
     
@@ -130,7 +130,7 @@ def shift_by_letter(letter, letter_shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-   alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     try:
         LetterIndex = alphabet.index(letter)
         ShiftIndex = alphabet.index(letter_shift)
@@ -142,6 +142,7 @@ def shift_by_letter(letter, letter_shift):
 
     except ValueError:
         return(" ")
+
 
 def vigenere_cipher(message, key):
     '''Vigenere Cipher. 
@@ -328,4 +329,31 @@ def scytale_decipher(message, shift):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    pass
+    repetitions = len(message)
+    
+    n = int(len(message)/shift)
+    
+    ModulusList = []
+    
+    CurrentText =""
+
+    for i in range(n):
+        for i in range(shift):
+            ModulusList.append(i)
+    
+    NewList = sorted(ModulusList)
+    
+    NewerText = []
+    
+    for i in range(shift):
+        if ModulusList[i] in NewList:
+            for k in range(n):
+                NewerText.append(ModulusList[i]+(shift*k))
+        else:
+            NewerText.append(NewList[i]) 
+    
+    for k in range(repetitions):
+        Index  = ModulusList[k]
+        CurrentText += message[NewerText[k]]
+    
+    return CurrentText
