@@ -191,12 +191,8 @@ def eta(first_stop, second_stop, route_map):
                     TimeTaken += NewDict['travel_time_mins']
     
     if FirstStop > SecondStop:
-        repetitions2 = (SecondStop + repetitions)
-        for k in range(repetitions2):
-            if k == FirstStop:
-                NewDict = route_map[stops[k]]
-                TimeTaken += NewDict['travel_time_mins']
-            if k <= SecondStop:
+        for k in range(repetitions):
+            if k <= SecondStop or k >= FirstStop:
                 NewDict = route_map[stops[k]]
                 TimeTaken += NewDict['travel_time_mins']
     
