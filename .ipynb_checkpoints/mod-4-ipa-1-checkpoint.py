@@ -183,9 +183,6 @@ def eta(first_stop, second_stop, route_map):
         if second_stop == stops[i][1]:
             SecondStop = i
     
-    print(FirstStop)  # remove later
-    print(SecondStop) # remove later
-    
     if FirstStop <= SecondStop:
         for j in range(repetitions):
             if j >= FirstStop and j <= SecondStop:
@@ -204,4 +201,4 @@ def eta(first_stop, second_stop, route_map):
                 NewDict = legs[stops[k - repetitions]]
                 TimeTaken += NewDict['travel_time_mins']
     
-    print(TimeTaken)
+    return(TimeTaken)
