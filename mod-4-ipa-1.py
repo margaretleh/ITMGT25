@@ -134,7 +134,10 @@ def tic_tac_toe(board):
     CheckDiagonal2 = set(diagonal2)
     if len(CheckDiagonal2) == 1:
             winner = ''.join(CheckDiagonal2)
-            
+
+    if winner == '':
+        winner = 'NO WINNER' 
+
     return winner
 
 def eta(first_stop, second_stop, route_map):
