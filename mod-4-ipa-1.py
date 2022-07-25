@@ -41,38 +41,31 @@ def relationship_status(from_member, to_member, social_graph):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
+    follower = 'follower'
+    followedBy = 'followed by'
+    friends = 'friends'
+    noRelationship = 'no relationship'
+    isFollowing = 0 
+    isFollowed = 0
     
+    for x in social_graph[to_member]['following']: # if from_member is followed by to_member
+        if x == from_member:
+            isFollowing = 1
     
-    Cond1 = False
-    Cond2 = False
-    relationship1 = 'friends'
-    relationship2 = 'followed by'
-    relationship3 = 'follower'
-    relationship4 = 'no relationship'
+    for y in social_graph[from_member]['following']: # if to_member is followed by from_member
+        if y == to_member:
+            isFollowed = 1
     
-    from_following = social_graph[from_member]['following']
+    if isFollowing == 0 and isFollowed == 0:
+        return noRelationship
+    elif isFollowing == 1 and isFollowed == 1:
+        return friends
+    elif isFollowing == 0 and isFollowed == 1:
+        return follower
+    elif isFollowing == 1 and isFollowed == 0:
+        return followedBy
 
-    to_following = social_graph[to_member]['following']
-    
-    for i in to_following: # if from_member is followed by to_member
-        if i == from_member:
-            Cond1 = True
-    
-    for j in from_following: # if to_member is followed by from_member
-        if j == to_member:
-            Cond2 = True
-    
-    if Cond1 == True and Cond2 == True:
-        return relationship1
-    else:
-        if Cond1 == True or Cond2 == True:
-               if Cond1 == True:
-                    return relationship2
-               else:
-                    return relationship3
-        
-        else:
-            return relationship4
+
 
 def tic_tac_toe(board):
     '''Tic Tac Toe. 
@@ -100,45 +93,78 @@ def tic_tac_toe(board):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
-    repetitions = len(board)
-    
-    diagonal1 = []
-    diagonal2 = []
-    
-    winner = 'NO WINNER'
-    
-    horizontals = [set(x) for x in board]
-    
-    verticals = [set(x) for x in zip(*board)]
- 
-    for i in range(repetitions): # to check horizontals
-        check1 = len(horizontals[i])
-        if check1 == 1:
-            winner = ''.join(horizontals[i])
-    
-    for i in range(repetitions): # to check verticals
-        check2 = len(verticals[i])
-        if check2 == 1:
-            winner = ''.join(verticals[i])
-    
-    for i in range(repetitions): # first diagonal
-        diagonal1.append(board[i][i])
-    
-    CheckDiagonal1 = set(diagonal1)
-    if len(CheckDiagonal1) == 1:
-            winner = ''.join(CheckDiagonal1)
-    
-    for j in range(repetitions): # second diagonal
-        diagonal2.append(board[repetitions-1-j][j])
         
-    CheckDiagonal2 = set(diagonal2)
-    if len(CheckDiagonal2) == 1:
-            winner = ''.join(CheckDiagonal2)
-
-    if winner == '':
-        winner = 'NO WINNER' 
+    lengthOfBoard = len(board)
+    counterX = 0
+    counter0 = 0
+    pointX = 0
+    point0 = 0
+    winner = ''
+    
+    #for horizontals
+    for row in range(lengthOfBoard):
+        for col in range(lengthOfBoard):
+            if board[row][col] == 'X':
+                counterX = counterX + 1
+            elif board[row][col] == 'O':
+                counter0 = counter0 + 1
+        if counterX == lengthOfBoard:
+            pointX = pointX + 1
+        elif counter0 == lengthOfBoard:
+            point0 = point0 + 1
+        counterX = 0
+        counter0 = 0
+        
+    #for verticals
+    for col in range(lengthOfBoard):
+        for row in range(lengthOfBoard):
+            if board[row][col] == 'X':
+                counterX = counterX + 1
+            elif board[row][col] == 'O':
+                counter0 = counter0 + 1
+        if counterX == lengthOfBoard:
+            pointX = pointX + 1
+        elif counter0 == lengthOfBoard:
+            point0 = point0 + 1
+        counterX = 0
+        counter0 = 0
+        
+    #for \ bsta slant yan
+    for LtoR in range(lengthOfBoard):
+        if board[LtoR][LtoR] == 'X':
+            counterX = counterX + 1
+        elif board[LtoR][LtoR] == 'O':
+            counter0 = counter0 + 1
+    if counterX == lengthOfBoard:
+        pointX = pointX + 1
+    elif counter0 == lengthOfBoard:
+        point0 = point0 + 1
+    counterX = 0
+    counter0 = 0    
+    
+    #for / bsta slant yan
+    for RtoL in range(lengthOfBoard):
+        if board[lengthOfBoard-1-RtoL][RtoL] == 'X':
+            counterX = counterX + 1
+        elif board[lengthOfBoard-1-RtoL][RtoL] == 'O':
+            counter0 = counter0 + 1
+    if counterX == lengthOfBoard:
+        pointX = pointX + 1
+    elif counter0 == lengthOfBoard:
+        point0 = point0 + 1
+    counterX = 0
+    counter0 = 0   
+    
+    #yung points
+    if pointX == 1:
+        winner = 'X'
+    elif point0 == 1:
+        winner = 'O'
+    else:
+        winner = 'NO WINNER'
 
     return winner
+    
 
 def eta(first_stop, second_stop, route_map):
     '''ETA. 
@@ -171,33 +197,31 @@ def eta(first_stop, second_stop, route_map):
     '''
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
+
+    Block = list(route_map.keys())
+    StationOne = 0
+    StationTwo = 0
+    TimeSpent = 0
     
-    repetitions = len(route_map)
-    stops = list(route_map.keys())
-    FirstStop = 0
-    SecondStop = 0
-    TimeTaken = 0
+    for x in range(len(route_map)):
+        if first_stop == Block[x][0]:
+            StationOne = x
     
-    for i in range(repetitions):
-        if first_stop == stops[i][0]:
-            FirstStop = i
+    for x in range(len(route_map)):
+        if second_stop == Block[x][1]:
+            StationTwo = x
     
-    for i in range(repetitions):
-        if second_stop == stops[i][1]:
-            SecondStop = i
+    if StationOne > StationTwo:
+        for z in range(len(route_map)):
+            if z >= StationOne or z <= StationTwo:
+                UpdatedDict = route_map[Block[z]]
+                TimeSpent =  TimeSpent + UpdatedDict['travel_time_mins']
     
-    if FirstStop <= SecondStop:
-        for j in range(repetitions):
-            if j >= FirstStop and j <= SecondStop:
-                if (FirstStop < SecondStop or FirstStop == SecondStop):
-                    NewDict = route_map[stops[j]]
-                    TimeTaken += NewDict['travel_time_mins']
+    elif StationOne <= StationTwo:
+        for y in range(len(route_map)):
+            if y <= StationTwo and y >= StationOne:
+                if (StationOne == StationTwo or StationOne < StationTwo):
+                    UpdatedDict = route_map[Block[y]]
+                    TimeSpent = TimeSpent + UpdatedDict['travel_time_mins']
     
-    if FirstStop > SecondStop:
-        for k in range(repetitions):
-            if k <= SecondStop or k >= FirstStop:
-                NewDict = route_map[stops[k]]
-                TimeTaken += NewDict['travel_time_mins']
-    
-    return(TimeTaken)
-          
+    return(TimeSpent)
